@@ -1,19 +1,14 @@
 package com.streetfighter;
 
-import com.streetfighter.manager.GameManager;
+import com.streetfighter.factory.FighterFactory;
+import com.streetfighter.fighter.Fighter;
 
 public class Main {
     public static void main(String[] args) {
-        GameManager gm = GameManager.getInstance();
-        System.out.println("Current state: " + gm.getCurrentState());
-        System.out.println("Round: " + gm.getRoundNumber());
+        Fighter p1 = FighterFactory.createFighter(FighterFactory.FighterType.RYU);
+        Fighter p2 = FighterFactory.createFighter(FighterFactory.FighterType.CHUN_LI);
 
-        gm.setCurrentState(GameManager.GameState.FIGHTING);
-        gm.addPlayer1Point();
-
-        // Fetch the instance again from somewhere else — should be the SAME object
-        GameManager gmAgain = GameManager.getInstance();
-        System.out.println("Same instance? " + (gm == gmAgain));
-        System.out.println("Player 1 score (seen from second reference): " + gmAgain.getPlayer1Score());
+        System.out.println("Player 1: " + p1);
+        System.out.println("Player 2: " + p2);
     }
 }
