@@ -2,6 +2,8 @@ package com.streetfighter.fighter;
 
 import com.streetfighter.state.FighterState;
 import com.streetfighter.state.IdleState;
+import com.streetfighter.state.StunnedState;
+import com.streetfighter.state.KOState;
 
 public class Fighter {
 
@@ -54,6 +56,16 @@ public class Fighter {
 
     public void pressBlock() {
         currentState.handleBlockInput(this);
+    }
+
+    public void getStunned() {
+        System.out.println(getName() + " got stunned!");
+        setState(new StunnedState());
+    }
+
+    public void getKnockedOut() {
+        System.out.println(getName() + " is knocked out!");
+        setState(new KOState());
     }
 
     @Override

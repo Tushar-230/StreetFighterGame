@@ -8,9 +8,14 @@ public class Main {
         Fighter ryu = FighterFactory.createFighter(FighterFactory.FighterType.RYU);
 
         System.out.println("State: " + ryu.getCurrentStateName());
-        ryu.pressAttack();          // Idle -> Attacking
+
+        ryu.getStunned();
         System.out.println("State: " + ryu.getCurrentStateName());
-        ryu.pressBlock();          // should be ignored (can't block mid-attack)
+        ryu.pressAttack();   // should be ignored — stunned
+        ryu.pressBlock();    // should be ignored — stunned
+
+        ryu.getKnockedOut();
         System.out.println("State: " + ryu.getCurrentStateName());
+        ryu.pressAttack();   // should show "KO'd" message
     }
 }
