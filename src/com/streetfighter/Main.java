@@ -1,21 +1,25 @@
 package com.streetfighter;
 
+import com.streetfighter.command.KeyboardInputHandler;
 import com.streetfighter.factory.FighterFactory;
 import com.streetfighter.fighter.Fighter;
+
+import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
         Fighter ryu = FighterFactory.createFighter(FighterFactory.FighterType.RYU);
 
-        System.out.println("State: " + ryu.getCurrentStateName());
+        JFrame frame = new JFrame("Command Pattern Test");
+        frame.setSize(400, 200);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        ryu.getStunned();
-        System.out.println("State: " + ryu.getCurrentStateName());
-        ryu.pressAttack();   // should be ignored — stunned
-        ryu.pressBlock();    // should be ignored — stunned
+        KeyboardInputHandler inputHandler = new KeyboardInputHandler(ryu);
+        frame.addKeyListener(inputHandler);
+        frame.setFocusable(true);
 
-        ryu.getKnockedOut();
-        System.out.println("State: " + ryu.getCurrentStateName());
-        ryu.pressAttack();   // should show "KO'd" message
+        frame.setVisible(true);
+
+        System.out.println("Window open — click on it, then press J or K. Check console for output.");
     }
 }
