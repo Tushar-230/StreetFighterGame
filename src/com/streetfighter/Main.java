@@ -1,25 +1,26 @@
 package com.streetfighter;
 
-import com.streetfighter.command.KeyboardInputHandler;
 import com.streetfighter.factory.FighterFactory;
 import com.streetfighter.fighter.Fighter;
-
-import javax.swing.*;
+import com.streetfighter.strategy.KickStrategy;
+import com.streetfighter.strategy.SpecialMoveStrategy;
 
 public class Main {
     public static void main(String[] args) {
         Fighter ryu = FighterFactory.createFighter(FighterFactory.FighterType.RYU);
+        Fighter chunLi = FighterFactory.createFighter(FighterFactory.FighterType.CHUN_LI);
 
-        JFrame frame = new JFrame("Command Pattern Test");
-        frame.setSize(400, 200);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        System.out.println(chunLi.getName() + " health: " + chunLi.getHealth());
 
-        KeyboardInputHandler inputHandler = new KeyboardInputHandler(ryu);
-        frame.addKeyListener(inputHandler);
-        frame.setFocusable(true);
+        ryu.performAttack(chunLi);   // default: Punch
+        System.out.println(chunLi.getName() + " health: " + chunLi.getHealth());
 
-        frame.setVisible(true);
+        ryu.setAttackStrategy(new KickStrategy());
+        ryu.performAttack(chunLi);
+        System.out.println(chunLi.getName() + " health: " + chunLi.getHealth());
 
-        System.out.println("Window open — click on it, then press J or K. Check console for output.");
+        ryu.setAttackStrategy(new SpecialMoveStrategy());
+        ryu.performAttack(chunLi);
+        System.out.println(chunLi.getName() + " health: " + chunLi.getHealth());
     }
 }

@@ -4,6 +4,8 @@ import com.streetfighter.state.FighterState;
 import com.streetfighter.state.IdleState;
 import com.streetfighter.state.StunnedState;
 import com.streetfighter.state.KOState;
+import com.streetfighter.strategy.AttackStrategy;
+import com.streetfighter.strategy.PunchStrategy;
 
 public class Fighter {
 
@@ -12,6 +14,7 @@ public class Fighter {
     protected int attackPower;
     protected int speed;
     private FighterState currentState;
+    private AttackStrategy attackStrategy;
 
     public Fighter(String name, int health, int attackPower, int speed) {
         this.name = name;
@@ -19,6 +22,7 @@ public class Fighter {
         this.attackPower = attackPower;
         this.speed = speed;
         this.currentState = new IdleState();
+        this.attackStrategy = new PunchStrategy();
     }
 
     public String getName() {
@@ -66,6 +70,13 @@ public class Fighter {
     public void getKnockedOut() {
         System.out.println(getName() + " is knocked out!");
         setState(new KOState());
+    }
+    public void setAttackStrategy(AttackStrategy strategy) {
+        this.attackStrategy = strategy;
+    }
+
+    public void performAttack(Fighter target) {
+        attackStrategy.execute(this, target);
     }
 
     @Override
