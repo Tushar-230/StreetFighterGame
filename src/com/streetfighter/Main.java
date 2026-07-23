@@ -1,21 +1,29 @@
 package com.streetfighter;
 
-import com.streetfighter.factory.FighterFactory;
-import com.streetfighter.fighter.Fighter;
+import com.streetfighter.command.KeyboardInputHandler;
+import com.streetfighter.gui.GamePanel;
 import com.streetfighter.observer.HealthBarUI;
+
+import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
-        Fighter ryu = FighterFactory.createFighter(FighterFactory.FighterType.RYU);
-        Fighter chunLi = FighterFactory.createFighter(FighterFactory.FighterType.CHUN_LI);
+        JFrame frame = new JFrame("Street Fighter Game");
+        GamePanel gamePanel = new GamePanel();
 
-        // Chun-Li's health bar is "watching" her health
-        chunLi.addObserver(new HealthBarUI());
+        // Hook up keyboard controls for Player 1 (Ryu) using J = punch, K = block
+        KeyboardInputHandler p1Input = new KeyboardInputHandler(gamePanel.getPlayer1(), gamePanel.getPlayer2());
+        gamePanel.addKeyListener(p1Input);
 
-        System.out.println("-- Ryu attacks Chun-Li --");
-        ryu.performAttack(chunLi);   // should auto-print a HealthBar update too
+        // Observer: repaint the panel whenever health changes
+        gamePanel.getPlayer1().addObserver((name, health) -> gamePanel.repaint());
+        gamePanel.getPlayer2().addObserver((name, health) -> gamePanel.repaint());
 
-        System.out.println("-- Ryu attacks again --");
-        ryu.performAttack(chunLi);
+        frame.add(gamePanel);
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+
+        gamePanel.requestFocusInWindow(); // so key presses are captured immediately
     }
 }

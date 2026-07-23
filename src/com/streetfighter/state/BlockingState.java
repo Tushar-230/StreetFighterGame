@@ -5,9 +5,10 @@ import com.streetfighter.fighter.Fighter;
 public class BlockingState implements FighterState {
 
     @Override
-    public void handleAttackInput(Fighter fighter) {
+    public void handleAttackInput(Fighter fighter, Fighter target) {
         System.out.println(fighter.getName() + " drops guard and attacks!");
-        fighter.setState(new AttackingState());
+        fighter.setState(new IdleState());
+        fighter.performAttack(target);
     }
 
     @Override

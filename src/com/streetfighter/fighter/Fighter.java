@@ -7,6 +7,7 @@ import com.streetfighter.state.KOState;
 import com.streetfighter.strategy.AttackStrategy;
 import com.streetfighter.strategy.PunchStrategy;
 import com.streetfighter.observer.HealthObserver;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +50,9 @@ public class Fighter {
         health -= amount;
         if (health < 0) health = 0;
         notifyObservers();
+        if (health == 0) {
+            setState(new KOState());
+        }
     }
 
     public void setState(FighterState newState) {
@@ -59,8 +63,8 @@ public class Fighter {
         return currentState.getStateName();
     }
 
-    public void pressAttack() {
-        currentState.handleAttackInput(this);
+    public void pressAttack(Fighter target) {
+        currentState.handleAttackInput(this, target);
     }
 
     public void pressBlock() {
@@ -76,6 +80,7 @@ public class Fighter {
         System.out.println(getName() + " is knocked out!");
         setState(new KOState());
     }
+
     public void setAttackStrategy(AttackStrategy strategy) {
         this.attackStrategy = strategy;
     }
@@ -83,6 +88,7 @@ public class Fighter {
     public void performAttack(Fighter target) {
         attackStrategy.execute(this, target);
     }
+
     public void addObserver(HealthObserver observer) {
         observers.add(observer);
     }

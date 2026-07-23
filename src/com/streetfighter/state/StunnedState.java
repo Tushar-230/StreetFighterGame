@@ -5,7 +5,7 @@ import com.streetfighter.fighter.Fighter;
 public class StunnedState implements FighterState {
 
     @Override
-    public void handleAttackInput(Fighter fighter) {
+    public void handleAttackInput(Fighter fighter, Fighter target) {
         System.out.println(fighter.getName() + " is stunned and can't attack!");
     }
 

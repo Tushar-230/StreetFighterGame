@@ -5,7 +5,7 @@ import com.streetfighter.fighter.Fighter;
 public class KOState implements FighterState {
 
     @Override
-    public void handleAttackInput(Fighter fighter) {
+    public void handleAttackInput(Fighter fighter, Fighter target) {
         System.out.println(fighter.getName() + " is KO'd — no more moves!");
     }
 

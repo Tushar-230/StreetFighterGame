@@ -11,7 +11,7 @@ import com.streetfighter.fighter.Fighter;
  */
 public interface FighterState {
 
-    void handleAttackInput(Fighter fighter);
+    void handleAttackInput(Fighter fighter, Fighter target);
     void handleBlockInput(Fighter fighter);
 
     String getStateName();
